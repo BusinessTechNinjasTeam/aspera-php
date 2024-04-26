@@ -1,8 +1,8 @@
 <?php
 
-$env = parse_ini_file('../.env');
+$env = parse_ini_file(dirname( dirname(__FILE__) ) . '/.env');
 
-$privateKey = file_get_contents('../private.pem');
+$privateKey = file_get_contents(dirname( dirname(__FILE__) ) . '/private.pem');
 $clientId = $env['CLIENT_ID'];
 $userEmail = $env['USER_EMAIL'];
 $orgSubdomain = $env['ORG_SUBDOMAIN'];
