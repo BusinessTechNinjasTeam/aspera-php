@@ -5,5 +5,8 @@
         "psr-4": {
             "AsperaPHP\\": "src/"
         }
+    },
+    "require": {
+        "ext-curl": "*"
     }
 }
