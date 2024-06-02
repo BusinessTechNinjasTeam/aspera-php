@@ -3,12 +3,22 @@
 namespace AsperaPHP\API;
 
 use AsperaPHP\Auth\AccessToken;
+use AsperaPHP\Node;
+use AsperaPHP\Package;
 
 class Request
 {
     public function __construct(
         protected AccessToken $accessToken,
     ) {}
+
+    public function fetch($endpoint, string $class, $id): Model
+    {
+        return call_user_func(
+            [$class, 'fromObject'],
+            $this->get("$endpoint/$id")
+        );
+    }
 
     public function list($endpoint, string $class): Collection
     {
@@ -27,7 +37,12 @@ class Request
         );
     }
 
-    protected function get($endpoint): mixed
+    public function update($endpoint, $id, $data): void
+    {
+        $this->put("$endpoint/$id", $data);
+    }
+
+    public function get($endpoint): mixed
     {
         return $this->request($endpoint);
     }
@@ -36,6 +51,14 @@ class Request
     {
         return $this->request($endpoint, [
             CURLOPT_POST => 1,
+            CURLOPT_POSTFIELDS => json_encode($data)
+        ]);
+    }
+
+    protected function put($endpoint, $data)
+    {
+        return $this->request($endpoint, [
+            CURLOPT_CUSTOMREQUEST => "PUT",
             CURLOPT_POSTFIELDS => json_encode($data)
         ]);
     }
@@ -59,7 +82,12 @@ class Request
         }
 
         $response = curl_exec($ch);
+        $status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
         curl_close($ch);
+
+        if($status < 200 || $status >= 300) {
+            throw new \Exception($status . $response . json_encode($options));
+        }
 
         return json_decode($response);
     }

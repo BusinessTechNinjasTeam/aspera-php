@@ -57,7 +57,12 @@ class GetAccessToken
         curl_setopt($ch, CURLOPT_USERPWD, "{$this->config->clientId}:{$this->config->clientSecret}");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($ch);
+        $status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
         curl_close($ch);
+
+        if($status < 200 || $status >= 300) {
+            throw new \Exception($response);
+        }
 
         return AccessToken::fromArray(json_decode($response, true));
     }

@@ -18,7 +18,9 @@ abstract class Model
         // Only map declared model properties from the response.
         foreach (get_class_vars(get_class($model)) as $key => $value) {
             // TODO: Maybe dynamically cast properties, ie package sender object
-            $model->$key = $data->$key;
+            if(isset($data->$key)) {
+                $model->$key = $data->$key;
+            }
         }
 
         return $model;
