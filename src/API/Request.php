@@ -8,9 +8,13 @@ use AsperaPHP\Package;
 
 class Request
 {
+    protected AccessToken $accessToken;
+
     public function __construct(
-        protected AccessToken $accessToken,
-    ) {}
+        AccessToken $accessToken
+    ) {
+        $this->accessToken = $accessToken;
+    }
 
     public function fetch($endpoint, string $class, $id): Model
     {
@@ -37,12 +41,12 @@ class Request
         );
     }
 
-    public function update($endpoint, $id, $data): void
+    public function update($endpoint, $id, $data)
     {
         $this->put("$endpoint/$id", $data);
     }
 
-    public function get($endpoint): mixed
+    public function get($endpoint)
     {
         return $this->request($endpoint);
     }

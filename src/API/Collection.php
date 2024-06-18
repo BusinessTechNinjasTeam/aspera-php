@@ -4,9 +4,13 @@ namespace AsperaPHP\API;
 
 class Collection
 {
+    public array $items;
+
     public function __construct(
-        public array $items,
-    ) {}
+        array $items
+    ) {
+        $this->items = $items;
+    }
 
     public function first()
     {

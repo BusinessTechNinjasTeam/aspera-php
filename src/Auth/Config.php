@@ -4,12 +4,22 @@ namespace AsperaPHP\Auth;
 
 class Config
 {
+    public string $clientId;
+    public string $userEmail;
+    public string $orgSubdomain;
+    public string $clientSecret;
+
     public function __construct(
-        public readonly string $clientId,
-        public readonly string $userEmail,
-        public readonly string $orgSubdomain,
-        public readonly string $clientSecret,
-    ) {}
+        string $clientId,
+        string $userEmail,
+        string $orgSubdomain,
+        string $clientSecret
+    ) {
+        $this->clientId = $clientId;
+        $this->userEmail = $userEmail;
+        $this->orgSubdomain = $orgSubdomain;
+        $this->clientSecret = $clientSecret;
+    }
 
     public static function fromArray($config): self
     {

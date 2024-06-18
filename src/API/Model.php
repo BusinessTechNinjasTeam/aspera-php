@@ -11,7 +11,7 @@ abstract class Model
         }
     }
 
-    public static function fromObject($data): static
+    public static function fromObject($data)
     {
         $model = new static();
 

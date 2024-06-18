@@ -7,11 +7,19 @@ use AsperaPHP\Package;
 
 class TransferRequest
 {
+    protected Package $package;
+    protected Node $node;
+    protected string $authorizationToken;
+
     public function __construct(
-        protected Package $package,
-        protected Node $node,
-        protected string $authorizationToken,
-    ) {}
+        Package $package,
+        Node $node,
+        string $authorizationToken
+    ) {
+        $this->package = $package;
+        $this->node = $node;
+        $this->authorizationToken = $authorizationToken;
+    }
 
     public function transfer($homeFolderId, $source)
     {

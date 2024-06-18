@@ -7,10 +7,16 @@ use AsperaPHP\Auth\Config;
 
 class GetAccessToken
 {
+    protected Config $config;
+    protected string $privateKey;
+
     public function __construct(
-        protected Config $config,
-        protected string $privateKey
-    ) {}
+        Config $config,
+        string $privateKey
+    ) {
+        $this->config = $config;
+        $this->privateKey = $privateKey;
+    }
 
     public function __invoke($scope)
     {

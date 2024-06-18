@@ -4,12 +4,22 @@ namespace AsperaPHP\Auth;
 
 class AccessToken
 {
+    protected string $accessToken;
+    protected string $tokenType;
+    protected int $expiresIn;
+    protected string $scope;
+
     public function __construct(
-        protected string $accessToken,
-        protected string $tokenType,
-        protected int $expiresIn,
-        protected string $scope,
-    ) {}
+        string $accessToken,
+        string $tokenType,
+        int $expiresIn,
+        string $scope
+    ) {
+        $this->accessToken = $accessToken;
+        $this->tokenType = $tokenType;
+        $this->expiresIn = $expiresIn;
+        $this->scope = $scope;
+    }
 
     public function __toString(): string
     {
